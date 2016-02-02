@@ -23,6 +23,7 @@ RUN pip install puppetboard
 ADD data/apache2.conf /etc/apache2/apache2.conf
 ADD data/apache-vhost-puppetboard /etc/apache2/sites-available/puppetboard
 ADD data/wsgi.py /srv/http/puppetboard/wsgi.py
+RUN chmod a+x /srv/http/puppetboard/wsgi.py
 RUN a2dissite default
 RUN a2ensite puppetboard
 
