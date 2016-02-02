@@ -7,7 +7,13 @@ data = {}
 
 data['PUPPETDB_HOST']       = os.getenv('PUPPETDB_HOST', 'localhost')
 data['PUPPETDB_PORT']       = os.getenv('PUPPETDB_PORT', 8081)
-data['PUPPETDB_SSL_VERIFY'] = os.getenv('PUPPETDB_SSL_VERIFY', True)
+try:
+    if os.getenv('PUPPETDB_SSL_VERIFY', True).lower() == 'true':
+        data['PUPPETDB_SSL_VERIFY'] = True
+    else:
+        data['PUPPETDB_SSL_VERIFY'] = False
+except:
+    DEBUG = False
 data['PUPPETDB_KEY']        = os.getenv('PUPPETDB_KEY', None)
 data['PUPPETDB_CERT']       = os.getenv('PUPPETDB_CERT', None)
 data['PUPPETDB_TIMEOUT']    = os.getenv('PUPPETDB_TIMEOUT', 20)
