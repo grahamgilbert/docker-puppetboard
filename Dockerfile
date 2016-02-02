@@ -1,19 +1,16 @@
 FROM debian:wheezy
 
-MAINTAINER Julien K. <docker@kassisol.com>
+MAINTAINER Graham Gilbert <graham@grahamgilbert.com>
 
 ADD data/proxy.sh /etc/profile.d/proxy.sh
 RUN /etc/profile.d/proxy.sh
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get update
-RUN apt-get install -y --no-install-recommends apache2 libapache2-mod-wsgi python python-pip wget
-
-RUN apt-get -y autoremove
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-RUN mkdir -p /srv/http
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends apache2 libapache2-mod-wsgi python python-pip wget && \
+    apt-get -y autoremove && \
+    apt-get clean &&\
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \mkdir -p /srv/http
 
 ADD data/run-apache /usr/local/bin/run-apache
 RUN chmod +x /usr/local/bin/run-apache
